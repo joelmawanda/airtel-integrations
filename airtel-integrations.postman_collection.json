@@ -1,0 +1,60 @@
+{
+	"info": {
+		"_postman_id": "5b112358-6622-47bd-899e-f38eed686270",
+		"name": "airtel-integrations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all payments details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/airtel-payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"airtel-payments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Receive payments details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<COMMAND>\r\n                <TYPE>C2B</TYPE>\r\n                <CUSTOMERMSISDN></CUSTOMERMSISDN>\r\n                <MERCHANTMSISDN></MERCHANTMSISDN>\r\n                <CUSTOMERNAME></CUSTOMERNAME>\r\n                <AMOUNT>1000</AMOUNT>\r\n                <PIN></PIN>\r\n                <REFERENCE>Payments</REFERENCE>\r\n                <USERNAME></USERNAME>\r\n                <PASSWORD></PASSWORD>\r\n                <REFERENCE1></REFERENCE1>\r\n</COMMAND>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/airtel-payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"airtel-payments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
