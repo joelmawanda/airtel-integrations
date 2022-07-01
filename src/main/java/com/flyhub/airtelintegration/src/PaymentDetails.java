@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "payments")
 @XmlRootElement(name = "COMMAND")
 @XmlAccessorType(XmlAccessType.FIELD)
-@JsonIgnoreProperties(value = {"id"}, allowSetters = true)
+@JsonIgnoreProperties(value = {"id", "type", "customerMsisdn", "merchantMsisdn", "customerName", "pin", "username", "password", "reference1"}, allowSetters = true)
 public class PaymentDetails {
 
     @Id
