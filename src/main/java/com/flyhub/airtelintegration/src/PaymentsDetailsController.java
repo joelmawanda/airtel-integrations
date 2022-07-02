@@ -3,6 +3,8 @@ package com.flyhub.airtelintegration.src;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +33,14 @@ public class PaymentsDetailsController {
         public void  generateExcelReport () throws IOException {
             paymentDetailsService.generateExcelReport();
         }
-    }
+
+    @GetMapping("/download/")
+    @ResponseBody
+    public void download(HttpServletResponse response) throws FileNotFoundException {
+            paymentDetailsService.downloadFile(response);
+        }
+}
+
+
 
 

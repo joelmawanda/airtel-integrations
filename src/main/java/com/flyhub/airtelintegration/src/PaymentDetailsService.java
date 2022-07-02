@@ -5,13 +5,16 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PaymentDetailsService {
+
+    private final String uploadDir = "C:\\MY_PROJECTS\\airtel-integrations\\Payments.xlsx";
+    private final String filename = "Payments.xlsx";
 
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
@@ -71,5 +74,27 @@ public class PaymentDetailsService {
         fileOut.close();
 
         }
+
+    public void downloadFile(HttpServletResponse response) throws FileNotFoundException {
+
+        if (filename.indexOf(".xls")>-1) response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=" +filename);
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+            FileInputStream fis = new FileInputStream(uploadDir);
+            int len;
+            byte[] buf = new byte[1024];
+            while((len = fis.read(buf)) > 0) {
+                bos.write(buf,0,len);
+            }
+            bos.close();
+            response.flushBuffer();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+
+        }
     }
+}
 
