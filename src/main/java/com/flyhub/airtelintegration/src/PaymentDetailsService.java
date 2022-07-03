@@ -1,5 +1,6 @@
 package com.flyhub.airtelintegration.src;
 
+import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PaymentDetailsService {
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
 
-    public List<PaymentDetails> listAllPaymentDetails(){
+    public List<PaymentDetails> listAllPaymentDetails() throws RecordNotFoundException {
         List<PaymentDetails> all_payments_details = paymentDetailsRepository.findAll();
         return all_payments_details;
     }

@@ -1,6 +1,10 @@
 package com.flyhub.airtelintegration.src;
 
+import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,10 +22,14 @@ public class PaymentsDetailsController {
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
 
-    @GetMapping(path={"/", ""})
-    public List<PaymentDetails> listAllPayments (){
-        List<PaymentDetails> all_payements = paymentDetailsService.listAllPaymentDetails();
-        return all_payements;
+    @GetMapping(path = {"/", ""})
+    public ResponseEntity<?> listAllPayments() {
+        try {
+            List<PaymentDetails> all_payments = paymentDetailsService.listAllPaymentDetails();
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments), HttpStatus.OK);
+        } catch (RecordNotFoundException ex) {
+            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
