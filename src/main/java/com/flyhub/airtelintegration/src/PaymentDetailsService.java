@@ -22,7 +22,7 @@ public class PaymentDetailsService {
 
     public List<PaymentDetails> listAllPaymentDetails() throws RecordNotFoundException {
         List<PaymentDetails> all_payments_details = paymentDetailsRepository.findAll();
-        return all_payments_details;
+        return  all_payments_details;
     }
 
     public PaymentDetails receivePaymentsDetails(PaymentDetails paymentDetails) {
@@ -76,7 +76,7 @@ public class PaymentDetailsService {
 
         }
 
-    public void downloadFile(HttpServletResponse response) throws RecordNotFoundException {
+    public void downloadFile(HttpServletResponse response) throws IOException {
 
         if (filename.indexOf(".xls")>-1) response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" +filename);

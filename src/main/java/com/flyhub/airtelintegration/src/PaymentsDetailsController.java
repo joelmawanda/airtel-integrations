@@ -57,8 +57,8 @@ public class PaymentsDetailsController {
         try {
             paymentDetailsService.downloadFile(response);
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully downloaded"), HttpStatus.OK);
-        } catch (RecordNotFoundException ex) {
-            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
+        } catch (IOException ex) {
+            return new ResponseEntity<>(new OperationResponse(ex.hashCode(), ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
