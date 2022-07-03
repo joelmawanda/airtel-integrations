@@ -21,17 +21,11 @@ import java.time.LocalDateTime;
 @ToString
 @Data
 @EqualsAndHashCode(callSuper = false)
-@JsonPropertyOrder(value = {"timestamp", "total_elements", "elements_on_page", "operation_result", "operation_description", "data"})
+@JsonPropertyOrder(value = {"timestamp", "operation_result", "operation_description", "data"})
 public class OperationResponse {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.APP_TIME_PATTERN)
     private LocalDateTime timestamp = LocalDateTime.now();
-
-    @JsonProperty("total_elements")
-    private int totalElements;
-
-    @JsonProperty("elements_on_page")
-    private int noOfElementsOnPage;
 
     @JsonProperty("operation_result")
     private int operationResult;
@@ -49,27 +43,6 @@ public class OperationResponse {
     }
 
     public OperationResponse(int operationResult, String operationDescription, Object data) {
-        this.operationResult = operationResult;
-        this.operationDescription = operationDescription;
-        this.data = data;
-    }
-
-    public OperationResponse(int totalElements, int operationResult, String operationDescription) {
-        this.totalElements = totalElements;
-        this.operationResult = operationResult;
-        this.operationDescription = operationDescription;
-    }
-
-    public OperationResponse(int totalElements, int noOfElementsOnPage, int operationResult, String operationDescription) {
-        this.totalElements = totalElements;
-        this.noOfElementsOnPage = noOfElementsOnPage;
-        this.operationResult = operationResult;
-        this.operationDescription = operationDescription;
-    }
-
-    public OperationResponse(int totalElements, int noOfElementsOnPage, int operationResult, String operationDescription, Object data) {
-        this.totalElements = totalElements;
-        this.noOfElementsOnPage = noOfElementsOnPage;
         this.operationResult = operationResult;
         this.operationDescription = operationDescription;
         this.data = data;
