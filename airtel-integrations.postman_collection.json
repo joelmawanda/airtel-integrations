@@ -55,6 +55,51 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Generate Payments Reprot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/airtel-payments/payments-report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"airtel-payments",
+						"payments-report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download file",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/airtel-payments/download/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"airtel-payments",
+						"download",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
