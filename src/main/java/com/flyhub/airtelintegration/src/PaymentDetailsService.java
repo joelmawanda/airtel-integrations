@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,9 @@ public class PaymentDetailsService {
 
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
-    
-    public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(int offset, int pageSize, String field) throws RecordNotFoundException{
-        Page<PaymentDetails> all_payments_details = paymentDetailsRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.DESC, field)));
-        if (all_payments_details == null) {
-            throw new RecordNotFoundException(1, String.format("No ideas present"));
-        }
-        return  all_payments_details;
+
+    public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(Pageable page) throws RecordNotFoundException{
+        return  paymentDetailsRepository.findAll(page);
     }
 
     public PaymentDetails receivePaymentsDetails(PaymentDetails paymentDetails) {
