@@ -21,10 +21,10 @@ public class PaymentsDetailsController {
     PaymentDetailsService paymentDetailsService;
 
     @GetMapping(path = {"/", ""})
-    public ResponseEntity<?> listAllPayments() {
+    public ResponseEntity<?> getPaymentDetailsWithPaginationAndSorting(@RequestParam(name="page", defaultValue = "0") int page, @RequestParam(name="pageSize", defaultValue = "10") int pageSize, @RequestParam(name="field", defaultValue = "amount") String field) {
         try {
-            List<PaymentDetails> all_payments = paymentDetailsService.listAllPaymentDetails();
-            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments), HttpStatus.OK);
+            Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page, pageSize, field);
+            return new ResponseEntity<>(new OperationResponse(Math.toIntExact(all_payments_details.getTotalElements()), all_payments_details.getSize(),Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments_details), HttpStatus.OK);
         } catch (RecordNotFoundException ex) {
             return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
         }

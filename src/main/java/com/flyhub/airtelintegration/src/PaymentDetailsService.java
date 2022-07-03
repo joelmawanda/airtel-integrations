@@ -4,6 +4,9 @@ import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +22,12 @@ public class PaymentDetailsService {
 
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
-
-    public List<PaymentDetails> listAllPaymentDetails() throws RecordNotFoundException {
-        List<PaymentDetails> all_payments_details = paymentDetailsRepository.findAll();
+    
+    public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(int offset, int pageSize, String field) throws RecordNotFoundException{
+        Page<PaymentDetails> all_payments_details = paymentDetailsRepository.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(Sort.Direction.DESC, field)));
+        if (all_payments_details == null) {
+            throw new RecordNotFoundException(1, String.format("No ideas present"));
+        }
         return  all_payments_details;
     }
 
