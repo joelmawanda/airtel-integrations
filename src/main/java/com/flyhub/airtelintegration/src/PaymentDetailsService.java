@@ -76,7 +76,7 @@ public class PaymentDetailsService {
 
         }
 
-    public void downloadFile(HttpServletResponse response) throws FileNotFoundException {
+    public void downloadFile(HttpServletResponse response) throws RecordNotFoundException {
 
         if (filename.indexOf(".xls")>-1) response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" +filename);

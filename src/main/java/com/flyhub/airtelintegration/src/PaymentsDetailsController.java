@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
@@ -19,9 +20,6 @@ public class PaymentsDetailsController {
     @Autowired
     PaymentDetailsService paymentDetailsService;
 
-    @Autowired
-    PaymentDetailsRepository paymentDetailsRepository;
-
     @GetMapping(path = {"/", ""})
     public ResponseEntity<?> listAllPayments() {
         try {
@@ -32,21 +30,38 @@ public class PaymentsDetailsController {
         }
     }
 
-    @PostMapping
-    public PaymentDetails savePaymentsDetails(@RequestBody PaymentDetails paymentDetails) {
-        return paymentDetailsService.receivePaymentsDetails(paymentDetails);
+    @PostMapping()
+    public ResponseEntity<?> savePaymentsDetails(@RequestBody PaymentDetails paymentDetails){
+
+        paymentDetailsService.receivePaymentsDetails(paymentDetails);
+
+        if (paymentDetails != null) {
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION,paymentDetails), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @GetMapping("/payments-report")
-        public void  generateExcelReport () throws IOException {
+    public ResponseEntity<?> generateExcelReport() {
+        try {
             paymentDetailsService.generateExcelReport();
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully generated, You can now download it"), HttpStatus.OK);
+        } catch (IOException ex) {
+            return new ResponseEntity<>(new OperationResponse(ex.hashCode(), ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
         }
+    }
 
     @GetMapping("/download/")
-    @ResponseBody
-    public void download(HttpServletResponse response) throws FileNotFoundException {
+    public ResponseEntity<?> downloadFile (HttpServletResponse response) {
+        try {
             paymentDetailsService.downloadFile(response);
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully downloaded"), HttpStatus.OK);
+        } catch (RecordNotFoundException ex) {
+            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
         }
+    }
+
 }
 
 
