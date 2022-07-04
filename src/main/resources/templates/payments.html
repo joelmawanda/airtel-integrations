@@ -8,6 +8,15 @@
 <body>
   <div class="container-fluid text-center">
     <div><h2>Payments</h2></div>
+    <div class="m-2">
+      <a class="h3" th:href="@{http://localhost:8080/api/v1/airtel-payments/payments-report}">Generate report</a>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary m-2" onclick="generateReport()">Generate report</button>
+    </div>
+    <div th:if="${message}" class="alert alert-success text text-center">
+      [[${message}]]
+    </div>
     <div>
       <table class="table table-bordered">
         <thead class="thead-dark">
@@ -29,5 +38,13 @@
       </table>
     </div>
   </div>
+  <script>
+    function generateReport(){
+        fetch('http://localhost:8080/api/v1/airtel-payments/payments-report')
+        .then(response => response.json())
+        .then(data => alert(data.operation_description));
+
+    }
+  </script>
 </body>
 </html>

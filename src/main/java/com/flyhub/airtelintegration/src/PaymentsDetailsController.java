@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,15 +40,15 @@ public class PaymentsDetailsController {
     }
 
 
-    @GetMapping(path = {"/", ""})
-    public ResponseEntity<?> getPaymentDetailsWithPaginationAndSorting(@PageableDefault(sort = "amount", direction = Sort.Direction.DESC) Pageable page) {
-        try {
-            Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page);
-            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments_details), HttpStatus.OK);
-        } catch (RecordNotFoundException ex) {
-            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
-        }
-    }
+//    @GetMapping(path = {"/", ""})
+//    public ResponseEntity<?> getPaymentDetailsWithPaginationAndSorting(@PageableDefault(sort = "amount", direction = Sort.Direction.DESC) Pageable page) {
+//        try {
+//            Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page);
+//            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments_details), HttpStatus.OK);
+//        } catch (RecordNotFoundException ex) {
+//            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
+//        }
+//    }
 
     @PostMapping()
     public ResponseEntity<?> savePaymentsDetails(@RequestBody PaymentDetails paymentDetails){
@@ -60,6 +61,14 @@ public class PaymentsDetailsController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+//    @GetMapping("/payments-report")
+//    public ModelAndView generateExcelReport(ModelAndView mv, RedirectAttributes ra) throws IOException {
+//            paymentDetailsService.generateExcelReport();
+//            ra.addFlashAttribute("message", "Report successfully generated, You can now download it");
+//            mv.setViewName("payments");
+//        return mv;
+//    }
 
     @GetMapping("/payments-report")
     public ResponseEntity<?> generateExcelReport() {
