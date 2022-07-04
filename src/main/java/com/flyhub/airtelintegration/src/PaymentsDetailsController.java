@@ -62,14 +62,6 @@ public class PaymentsDetailsController {
         }
     }
 
-//    @GetMapping("/payments-report")
-//    public ModelAndView generateExcelReport(ModelAndView mv, RedirectAttributes ra) throws IOException {
-//            paymentDetailsService.generateExcelReport();
-//            ra.addFlashAttribute("message", "Report successfully generated, You can now download it");
-//            mv.setViewName("payments");
-//        return mv;
-//    }
-
     @GetMapping("/payments-report")
     public ResponseEntity<?> generateExcelReport() {
         try {
