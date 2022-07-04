@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -24,31 +25,13 @@ public class PaymentsDetailsController {
     @Autowired
     PaymentDetailsService paymentDetailsService;
 
-    @GetMapping("/home")
-    public ModelAndView showHomePage(){
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("index");
-        return mv;
-    }
-
-    @GetMapping("/payments")
+    @GetMapping(path = {"/", ""})
     public ModelAndView showPaymentsDetails(ModelAndView mv, Pageable page) throws RecordNotFoundException {
             Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page);
             mv.addObject("all_payments_details", all_payments_details);
             mv.setViewName("payments");
             return mv;
     }
-
-
-//    @GetMapping(path = {"/", ""})
-//    public ResponseEntity<?> getPaymentDetailsWithPaginationAndSorting(@PageableDefault(sort = "amount", direction = Sort.Direction.DESC) Pageable page) {
-//        try {
-//            Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page);
-//            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, all_payments_details), HttpStatus.OK);
-//        } catch (RecordNotFoundException ex) {
-//            return new ResponseEntity<>(new OperationResponse(ex.getExceptionCode(), ex.getExceptionMessage()), HttpStatus.NOT_FOUND);
-//        }
-//    }
 
     @PostMapping()
     public ResponseEntity<?> savePaymentsDetails(@RequestBody PaymentDetails paymentDetails){
@@ -71,17 +54,16 @@ public class PaymentsDetailsController {
             return new ResponseEntity<>(new OperationResponse(ex.hashCode(), ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
         }
     }
-
+    
     @GetMapping("/download/")
     public ResponseEntity<?> downloadFile (HttpServletResponse response) {
         try {
             paymentDetailsService.downloadFile(response);
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully downloaded"), HttpStatus.OK);
         } catch (IOException ex) {
-            return new ResponseEntity<>(new OperationResponse(ex.hashCode(), ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, ex.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
-
 }
 
 

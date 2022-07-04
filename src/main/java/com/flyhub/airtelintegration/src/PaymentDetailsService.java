@@ -82,10 +82,9 @@ public class PaymentDetailsService {
 
     public void downloadFile(HttpServletResponse response) throws IOException {
 
-        if (filename.indexOf(".xls")>-1) response.setContentType("application/vnd.ms-excel");
+        if (filename.indexOf(".xlsx")>-1) response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" +filename);
         response.setHeader("Content-Transfer-Encoding", "binary");
-        try {
             BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
             FileInputStream fis = new FileInputStream(uploadDir);
             int len;
@@ -95,11 +94,6 @@ public class PaymentDetailsService {
             }
             bos.close();
             response.flushBuffer();
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-
-        }
     }
 }
 
