@@ -1,10 +1,13 @@
 package com.flyhub.airtelintegration.src;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "COMMAND")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JsonIgnoreProperties(value = {"id", "type", "customerMsisdn", "merchantMsisdn", "customerName", "pin", "username", "password", "reference1"}, allowSetters = true)
+@JsonPropertyOrder(value = {"amount", "reference", "create_date"})
 public class PaymentDetails {
 
     @Id
@@ -45,6 +50,8 @@ public class PaymentDetails {
     @XmlElement(name = "CUSTOMERNAME")
     private String customerName;
 
+    @Column(name="amount")
+    @JsonProperty("amount")
     @XmlElement(name = "AMOUNT")
     private String amount;
 
@@ -52,6 +59,8 @@ public class PaymentDetails {
     @XmlElement(name = "PIN")
     private String pin;
 
+    @Column(name="reference")
+    @JsonProperty("reference")
     @XmlElement(name = "REFERENCE")
     private String reference;
 
@@ -66,5 +75,10 @@ public class PaymentDetails {
     @Transient
     @XmlElement(name = "REFERENCE1")
     private String reference1;
+
+    @Column(name="payments_date")
+    @JsonProperty("payments_date")
+    @CreationTimestamp
+    private Date createDate;
 
 }

@@ -34,7 +34,7 @@ public class PaymentDetailsService {
 
     public void generateExcelReport() throws IOException {
 
-        String[] columns = { "Amount", "Reference" };
+        String[] columns = { "Amount", "Reference", "Payments Date" };
 
         List<PaymentDetails> paymentDetails = paymentDetailsRepository.findAll();
 
@@ -65,6 +65,7 @@ public class PaymentDetailsService {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(paymentDetail.getAmount());
             row.createCell(1).setCellValue(paymentDetail.getReference());
+            row.createCell(2).setCellValue(paymentDetail.getCreateDate().toString());
         }
 
         // Resize all columns to fit the content size
