@@ -8,7 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -19,6 +22,22 @@ public class PaymentsDetailsController {
 
     @Autowired
     PaymentDetailsService paymentDetailsService;
+
+    @GetMapping("/home")
+    public ModelAndView showHomePage(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return mv;
+    }
+
+    @GetMapping("/payments")
+    public ModelAndView showPaymentsDetails(ModelAndView mv, Pageable page) throws RecordNotFoundException {
+            Page<PaymentDetails> all_payments_details = paymentDetailsService.listAllPaymentDetailsWithPaginationAndSorting(page);
+            mv.addObject("all_payments_details", all_payments_details);
+            mv.setViewName("payments");
+            return mv;
+    }
+
 
     @GetMapping(path = {"/", ""})
     public ResponseEntity<?> getPaymentDetailsWithPaginationAndSorting(@PageableDefault(sort = "amount", direction = Sort.Direction.DESC) Pageable page) {

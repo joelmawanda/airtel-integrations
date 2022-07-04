@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Payments</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+  <div class="container-fluid text-center">
+    <div><h2>Payments</h2></div>
+    <div>
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Amount</th>
+            <th>Reference</th>
+            <th>Payment Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <th:block th:each="payment : ${all_payments_details}">
+            <tr>
+              <td>[[${payment.amount}]]</td>
+              <td>[[${payment.reference}]]</td>
+              <td>[[${payment.createDate}]]</td>
+            </tr>
+          </th:block>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
