@@ -1,19 +1,19 @@
 package com.flyhub.airtelintegration.src;
 
-import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
+
+/**
+ *
+ * @author Mawanda Joel
+ */
 
 @Service
 public class PaymentDetailsService {
@@ -24,7 +24,7 @@ public class PaymentDetailsService {
     @Autowired
     PaymentDetailsRepository paymentDetailsRepository;
 
-    public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(Pageable page) throws RecordNotFoundException{
+    public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(Pageable page) {
         return  paymentDetailsRepository.findAll(page);
     }
 

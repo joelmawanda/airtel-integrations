@@ -1,6 +1,11 @@
 package com.flyhub.airtelintegration.src;
 
 /**
+ *
+ * @author Mawanda Joel
+ */
+
+/**
  * This class holds variables that are used across the project for configuring
  * various tools
  *
