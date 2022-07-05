@@ -29,12 +29,12 @@ public class PaymentDetailsService {
     PaymentDetailsRepository paymentDetailsRepository;
 
     public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(Pageable page) {
-        log.info("Retrieving all payments from the database");
+        log.info("[Inside the listAllPaymentDetailsWithPaginationAndSorting method]: Retrieving all payments from the database");
         return  paymentDetailsRepository.findAll(page);
     }
 
     public PaymentDetails receivePaymentsDetails(PaymentDetails paymentDetails) {
-        log.info("Receiving payments");
+        log.info("[Inside the receivePaymentsDetails method]: Receiving payments");
         return paymentDetailsRepository.save(paymentDetails);
     }
 
@@ -42,7 +42,7 @@ public class PaymentDetailsService {
 
         String[] columns = { "Amount", "Reference", "Payments Date" };
 
-        log.info("Retrieving all payments from the database");
+        log.info("[Inside the generateExcelReport method]: Retrieving all payments from the database");
 
         List<PaymentDetails> paymentDetails = paymentDetailsRepository.findAll();
 
@@ -98,7 +98,7 @@ public class PaymentDetailsService {
 
     public void downloadFile(HttpServletResponse response) throws IOException {
 
-        log.info("Downloading report");
+        log.info("[Inside the downloadFile method]: Downloading report");
 
         if (filename.indexOf(".xlsx")>-1) response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=" +filename);
