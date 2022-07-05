@@ -51,17 +51,17 @@ public class PaymentsDetailsController {
             paymentDetailsService.generateExcelReport();
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully generated, You can now download it"), HttpStatus.OK);
         } catch (IOException ex) {
-            return new ResponseEntity<>(new OperationResponse(ex.hashCode(), ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, Constants.OPERATION_FAILED_DESCRIPTION), HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @GetMapping("/download/")
     public ResponseEntity<?> downloadFile (HttpServletResponse response) {
         try {
             paymentDetailsService.downloadFile(response);
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, "Report successfully downloaded"), HttpStatus.OK);
         } catch (IOException ex) {
-            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, ex.getMessage()), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, "Please first generate the report"), HttpStatus.NOT_FOUND);
         }
     }
 }
