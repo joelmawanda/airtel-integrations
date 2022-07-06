@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -33,15 +34,11 @@ public class PaymentsDetailsController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> savePaymentsDetails(@RequestBody PaymentDetails paymentDetails){
+    public ResponseEntity<?> savePaymentsDetails(@RequestBody @Valid PaymentDetails paymentDetails){
 
-        paymentDetailsService.receivePaymentsDetails(paymentDetails);
+       PaymentDetails new_payment = paymentDetailsService.receivePaymentsDetails(paymentDetails);
 
-        if (paymentDetails != null) {
-            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION,paymentDetails), HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-        }
+        return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION,new_payment), HttpStatus.CREATED);
     }
 
     @GetMapping("/payments-report")

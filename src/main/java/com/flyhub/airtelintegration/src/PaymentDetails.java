@@ -8,10 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -55,6 +54,7 @@ public class PaymentDetails {
     @XmlElement(name = "CUSTOMERNAME")
     private String customerName;
 
+    @NotBlank(message = "Amount should not be empty")
     @Column(name="amount")
     @JsonProperty("amount")
     @XmlElement(name = "AMOUNT")
@@ -64,6 +64,7 @@ public class PaymentDetails {
     @XmlElement(name = "PIN")
     private String pin;
 
+    @NotBlank(message = "Reference should not be empty")
     @Column(name="reference")
     @JsonProperty("reference")
     @XmlElement(name = "REFERENCE")
