@@ -37,23 +37,11 @@ public class PaymentsDetailsController {
             return mv;
     }
 
-//    @GetMapping("findById/{id}")
-//    public ResponseEntity<?> getPaymentById (@PathVariable("id") @NotNull(message = "Id cannot be null") Long id) throws RecordNotFoundException {
-//            PaymentDetails paymentDetails = paymentDetailsService.getPaymentById(id);
-//            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, paymentDetails), HttpStatus.OK);
-//    }
-
     @GetMapping("findById/{id}")
     public ResponseEntity<?> getPaymentById (@PathVariable("id") @NotNull(message = "Id cannot be null") Long id) throws RecordNotFoundException {
-        try {
             PaymentDetails paymentDetails = paymentDetailsService.getPaymentById(id);
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, paymentDetails), HttpStatus.OK);
-        } catch (RecordNotFoundException ex) {
-            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
-        }
     }
-
-
 
     @PostMapping()
     public ResponseEntity<?> savePaymentsDetails(@RequestBody @Valid PaymentDetails paymentDetails){

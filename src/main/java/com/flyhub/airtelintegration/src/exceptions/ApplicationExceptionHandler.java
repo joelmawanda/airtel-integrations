@@ -1,6 +1,9 @@
 package com.flyhub.airtelintegration.src.exceptions;
 
+import com.flyhub.airtelintegration.src.Constants;
+import com.flyhub.airtelintegration.src.OperationResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,11 +26,10 @@ public class ApplicationExceptionHandler {
         return errorMap;
     }
 
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(RecordNotFoundException.class)
-//    public Map<String, String > handleBusinessException(RecordNotFoundException ex){
-//        Map<String, String> errorMap = new HashMap<>();
-//        errorMap.put("error message", ex.getMessage());
-//        return errorMap;
-//    }
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<OperationResponse> handleBusinessException(RecordNotFoundException ex){
+        return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+    }
+
 }
