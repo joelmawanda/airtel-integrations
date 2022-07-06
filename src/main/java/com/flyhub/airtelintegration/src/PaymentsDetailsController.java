@@ -1,16 +1,20 @@
 package com.flyhub.airtelintegration.src;
 
 
+import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  *
@@ -32,6 +36,24 @@ public class PaymentsDetailsController {
             mv.setViewName("payments");
             return mv;
     }
+
+//    @GetMapping("findById/{id}")
+//    public ResponseEntity<?> getPaymentById (@PathVariable("id") @NotNull(message = "Id cannot be null") Long id) throws RecordNotFoundException {
+//            PaymentDetails paymentDetails = paymentDetailsService.getPaymentById(id);
+//            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, paymentDetails), HttpStatus.OK);
+//    }
+
+    @GetMapping("findById/{id}")
+    public ResponseEntity<?> getPaymentById (@PathVariable("id") @NotNull(message = "Id cannot be null") Long id) throws RecordNotFoundException {
+        try {
+            PaymentDetails paymentDetails = paymentDetailsService.getPaymentById(id);
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, paymentDetails), HttpStatus.OK);
+        } catch (RecordNotFoundException ex) {
+            return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
     @PostMapping()
     public ResponseEntity<?> savePaymentsDetails(@RequestBody @Valid PaymentDetails paymentDetails){

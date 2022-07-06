@@ -1,5 +1,6 @@
 package com.flyhub.airtelintegration.src;
 
+import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -31,6 +33,16 @@ public class PaymentDetailsService {
     public Page<PaymentDetails> listAllPaymentDetailsWithPaginationAndSorting(Pageable page) {
         log.info("[Inside the listAllPaymentDetailsWithPaginationAndSorting method]: Retrieving all payments from the database");
         return  paymentDetailsRepository.findAll(page);
+    }
+
+    public PaymentDetails getPaymentById (Long id) throws RecordNotFoundException {
+        log.info("[Inside the getPaymentById method]: Retrieving payment from the database");
+        PaymentDetails paymentDetails = paymentDetailsRepository.findById(id).orElse(null);
+        if(paymentDetails == null){
+            throw new RecordNotFoundException("Record with id " + id + " not found");
+        }else{
+            return paymentDetails;
+        }
     }
 
     public PaymentDetails receivePaymentsDetails(PaymentDetails paymentDetails) {
