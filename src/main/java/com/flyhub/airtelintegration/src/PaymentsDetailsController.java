@@ -70,6 +70,7 @@ public class PaymentsDetailsController {
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_FAILURE_CODE, "Please first generate the report"), HttpStatus.NOT_FOUND);
         }
     }
+
 }
 
 
