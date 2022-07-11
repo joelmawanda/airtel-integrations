@@ -1,6 +1,7 @@
 package com.flyhub.airtelintegration.src;
 
 import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
+import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -12,13 +13,12 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
  * @author Mawanda Joel
  */
-
+@AllArgsConstructor
 @Service
 public class PaymentDetailsService {
 

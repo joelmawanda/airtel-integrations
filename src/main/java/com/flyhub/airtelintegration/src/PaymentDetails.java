@@ -87,4 +87,8 @@ public class PaymentDetails {
     @CreationTimestamp
     private Date createDate;
 
+    public PaymentDetails(String amount, String reference) {
+        this.amount = amount;
+        this.reference = reference;
+    }
 }
