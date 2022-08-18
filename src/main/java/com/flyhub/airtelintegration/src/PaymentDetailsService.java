@@ -18,13 +18,13 @@ import java.util.List;
  *
  * @author Mawanda Joel
  */
-@AllArgsConstructor
+//@AllArgsConstructor
 @Service
 public class PaymentDetailsService {
 
     Logger log = LoggerFactory.getLogger(PaymentDetailsService.class);
 
-    private final String uploadDir = "C:\\MY_PROJECTS\\airtel-integrations\\Payments.xlsx";
+    private final String uploadDir = "C:\\Flyhub_projects\\airtel-integrations\\Payments.xlsx";
     private final String filename = "Payments.xlsx";
 
     @Autowired

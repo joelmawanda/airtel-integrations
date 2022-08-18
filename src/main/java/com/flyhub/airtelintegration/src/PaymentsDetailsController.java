@@ -2,6 +2,7 @@ package com.flyhub.airtelintegration.src;
 
 
 import com.flyhub.airtelintegration.src.exceptions.RecordNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ import java.util.Optional;
  * @author Mawanda Joel
  */
 
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/airtel-payments")
 public class PaymentsDetailsController {
@@ -43,7 +44,7 @@ public class PaymentsDetailsController {
             return new ResponseEntity<>(new OperationResponse(Constants.OPERATION_SUCCESS_CODE, Constants.OPERATION_SUCCESS_DESCRIPTION, paymentDetails), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping("/")
     public ResponseEntity<?> savePaymentsDetails(@RequestBody @Valid PaymentDetails paymentDetails){
 
        PaymentDetails new_payment = paymentDetailsService.receivePaymentsDetails(paymentDetails);
