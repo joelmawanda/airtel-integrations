@@ -14,9 +14,22 @@
       <button type="submit" class="btn btn-primary m-2" onclick="downloadReport()">Download report</button>
     </div>
 
-    <div>
+    <div class="container">
       <table class="table table-bordered">
-        <thead class="thead-dark">
+
+        <div class="col-sm-3 mt-5 mb-4 text-gred">
+          <div class="search">
+            <form class="form-inline">
+              <input
+                      class="form-control mr-sm-2"
+                      type="text"
+                      placeholder="Search"
+                      aria-label="Search"
+              />
+            </form>
+          </div>
+        </div>
+        <thead class="">
           <tr>
             <th>Amount</th>
             <th>Reference</th>
@@ -33,6 +46,19 @@
           </th:block>
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
 
   </div>
